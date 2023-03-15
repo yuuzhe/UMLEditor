@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 public class ButtonsPanel extends JPanel {
 	private ButtonGroup buttonGroup;
@@ -10,7 +11,7 @@ public class ButtonsPanel extends JPanel {
 		this.buttonGroup = new ButtonGroup();
 	}
 	
-	public void addtoButtonGroup(StateButton sb) {
-		this.buttonGroup.add(sb);
+	public void addtoButtonGroup(JToggleButton button) {
+		this.buttonGroup.add(button);
 	}
 }

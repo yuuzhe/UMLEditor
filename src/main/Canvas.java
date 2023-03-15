@@ -8,24 +8,24 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 
 public class Canvas extends JPanel {
-	private StateButton stateButton;
+	private State state;
 	
 	public Canvas() {
-		this.stateButton = null;
+		this.state = new SelectState();
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				onclick(e.getX(), e.getY());
+				onclick(e);
 			}
 		});
 	}
 	
-	public void setState(StateButton sb) {
-		this.stateButton = sb;
+	public void setState(State s) {
+		this.state = s;
 	}
 	
-	private void onclick(int x, int y) {
-		this.stateButton.onclick(this, x, y);
+	private void onclick(MouseEvent e) {
+		this.state.onclick(this, e);
 	}
 }

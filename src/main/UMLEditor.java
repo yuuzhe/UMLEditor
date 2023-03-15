@@ -5,10 +5,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import javax.swing.JMenuItem;
+import javax.swing.JToggleButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
@@ -103,70 +105,85 @@ public class UMLEditor {
 		);
 		canvas.setLayout(gl_canvas);
 		
-		SelectStateButton selectButton = new SelectStateButton();
+		JToggleButton selectButton = new JToggleButton();
+		selectButton.setSize(64, 64);
+		selectButton.setToolTipText("Select");
+		selectButton.setIcon(new ImageIcon("assets\\select.png"));
+		selectButton.setSelected(true);
 		selectButton.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (selectButton.isSelected()) {
-					canvas.setState(selectButton);
+					canvas.setState(new SelectState());
 				}
 			}
 		});
-
-		selectButton.setSelected(true);
-		// Default state
-		canvas.setState(selectButton);
 		buttonsPanel.add(selectButton);
 		buttonsPanel.addtoButtonGroup(selectButton);
 		
-		ALStateButton associationLineButton = new ALStateButton();
+		JToggleButton associationLineButton = new JToggleButton();
+		associationLineButton.setSize(64, 64);
+		associationLineButton.setToolTipText("Association Line");
+		associationLineButton.setIcon(new ImageIcon("assets\\association.png"));
 		associationLineButton.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (associationLineButton.isSelected()) {
-					canvas.setState(associationLineButton);
+					canvas.setState(new ALState());
 				}
 			}
 		});
 		buttonsPanel.add(associationLineButton);
 		buttonsPanel.addtoButtonGroup(associationLineButton);
 		
-		GLStateButton generalizationLineButton = new GLStateButton();
+		JToggleButton generalizationLineButton = new JToggleButton();
+		generalizationLineButton.setSize(64, 64);
+		generalizationLineButton.setToolTipText("Generalization Line");
+		generalizationLineButton.setIcon(new ImageIcon("assets\\generalization.png"));
 		generalizationLineButton.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (generalizationLineButton.isSelected()) {
-					canvas.setState(generalizationLineButton);
+					canvas.setState(new GLState());
 				}
 			}
 		});
 		buttonsPanel.add(generalizationLineButton);
 		buttonsPanel.addtoButtonGroup(generalizationLineButton);
 		
-		CLStateButton compositionLineButton = new CLStateButton();
+		JToggleButton compositionLineButton = new JToggleButton();
+		compositionLineButton.setSize(64, 64);
+		compositionLineButton.setIcon(new ImageIcon("assets\\composition.png"));
+		compositionLineButton.setToolTipText("Composition Line");
 		compositionLineButton.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (compositionLineButton.isSelected()) {
-					canvas.setState(compositionLineButton);
+					canvas.setState(new CLState());
 				}
 			}
 		});
 		buttonsPanel.add(compositionLineButton);
 		buttonsPanel.addtoButtonGroup(compositionLineButton);
 		
-		ClassStateButton classButton = new ClassStateButton();
+		JToggleButton classButton = new JToggleButton();
+		classButton.setSize(64, 64);
+		classButton.setToolTipText("Class");
+		classButton.setIcon(new ImageIcon("assets\\class.png"));
 		classButton.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (classButton.isSelected()) {
-					canvas.setState(classButton);
+					canvas.setState(new ClassState());
 				}
 			}
 		});
 		buttonsPanel.add(classButton);
 		buttonsPanel.addtoButtonGroup(classButton);
 		
-		UseCaseStateButton useCaseButton = new UseCaseStateButton();
+		JToggleButton useCaseButton = new JToggleButton();
+		useCaseButton.setSize(64, 64);
+		useCaseButton.setToolTipText("Use Case");
+		useCaseButton.setIcon(new ImageIcon("assets\\uc.png"));
 		useCaseButton.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (useCaseButton.isSelected()) {
-					canvas.setState(useCaseButton);
+					canvas.setState(new UCState());
 				}
 			}
 		});
