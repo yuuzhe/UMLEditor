@@ -69,6 +69,14 @@ public abstract class BasicObject extends JLabel implements Select {
 		this.hidePort();
 	}
 	
+	public void toggleSelect() {
+		if (isSelected()) {
+			unselect();
+		} else {
+			select();
+		}
+	}
+	
 	public void movebyOffset(int dx, int dy) {
 		int x = this.getX();
 		int y = this.getY();

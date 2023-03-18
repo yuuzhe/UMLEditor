@@ -44,8 +44,8 @@ class SelectState implements State {
 			return;
 		int dx = e.getX() - mousePt.x;
 		int dy = e.getY() - mousePt.y;
+		System.out.format("e.x: %d e.y: m.x: %d m.y: %d\n", e.getX(), e.getY(), mousePt.x, mousePt.y);
 		selectObj.movebyOffset(dx, dy);
-		this.mousePt = e.getPoint();
 		canvas.repaint();
 	}
 }

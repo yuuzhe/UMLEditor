@@ -15,6 +15,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 public class UMLEditor {
 
@@ -69,6 +70,11 @@ public class UMLEditor {
 		editMenu.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Change Object Name");
+		mntmNewMenuItem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		editMenu.add(mntmNewMenuItem);
 		
 		ButtonsPanel buttonsPanel = new ButtonsPanel();
