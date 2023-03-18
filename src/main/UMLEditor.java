@@ -13,6 +13,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseEvent;
 
 public class UMLEditor {
 
@@ -113,7 +115,7 @@ public class UMLEditor {
 		selectButton.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (selectButton.isSelected()) {
-					canvas.setState(new SelectState());
+					canvas.setState(new SelectState(canvas));
 				}
 			}
 		});

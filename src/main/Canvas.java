@@ -9,9 +9,10 @@ import javax.swing.JPanel;
 
 public class Canvas extends JPanel {
 	private State state;
+	private ArrayList<Select> selectedObjs = new ArrayList();
 	
 	public Canvas() {
-		this.state = new SelectState();
+		this.state = new SelectState(this);
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
@@ -26,7 +27,19 @@ public class Canvas extends JPanel {
 	}
 	
 	public void setState(State s) {
+		// Reset selected before changing state.
+		this.clearSelectedObjs();
 		this.state = s;
+	}
+	
+	public void addtoSelected(Select s) {
+		this.selectedObjs.add(s);
+	}
+	
+	public void clearSelectedObjs() {
+		for (Select obj : this.selectedObjs)
+			obj.unselect();
+		this.selectedObjs.clear();
 	}
 	
 	private void onclick(MouseEvent e) {
