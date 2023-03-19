@@ -2,18 +2,18 @@ package main;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public abstract class BasicObject extends JLabel implements Select {
-	private ImageIcon icon = new ImageIcon();
+	private ImageIcon selectedIcon = new ImageIcon();
+	private ImageIcon unselectedIcon = new ImageIcon();
 	protected Port[] ports = new Port[4];
 	protected boolean selected = false;
 	
-	public BasicObject(String iconPath) {
+	public BasicObject(String unselectedIconPath, String selectedIconPath) {
 		super.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -33,10 +33,11 @@ public abstract class BasicObject extends JLabel implements Select {
 			}
 		});
 		
-		this.icon = new ImageIcon(iconPath);
+		this.selectedIcon = new ImageIcon(selectedIconPath);
+		this.unselectedIcon = new ImageIcon(unselectedIconPath);
 		
 		super.setSize(64, 64);
-		super.setIcon(this.icon);
+		super.setIcon(this.unselectedIcon);
 	}
 	
 	protected void onclick(MouseEvent e) {
@@ -94,8 +95,13 @@ public abstract class BasicObject extends JLabel implements Select {
 		super.setVerticalTextPosition(JLabel.CENTER);
 	}
 	
-	public abstract void showPort();
-	public abstract void hidePort();
+	public void showPort() {
+		setIcon(this.selectedIcon);
+	}
+	
+	public void hidePort() {
+		setIcon(this.unselectedIcon);
+	}
 }
 
 class Port {
@@ -108,28 +114,12 @@ class Port {
 
 class ClassObject extends BasicObject {
 	public ClassObject() {
-		super("assets\\class.png");
-	}
-	
-	public void showPort() {
-		this.setText("12345678");
-	}
-	
-	public void hidePort() {
-		this.setText("");
+		super("assets\\class.png", "assets\\selected_class.png");
 	}
 }
 
 class UCObject extends BasicObject {
 	public UCObject() {
-		super("assets\\uc.png");
-	}
-
-	public void showPort() {
-
-	}
-
-	public void hidePort() {
-		
+		super("assets\\uc.png", "assets\\selected_uc.png");
 	}
 }

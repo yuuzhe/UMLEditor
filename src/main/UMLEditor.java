@@ -11,11 +11,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
