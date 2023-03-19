@@ -25,17 +25,20 @@ class SelectState implements State {
 	}
 	
 	public void onclick(BasicObject bo, MouseEvent e) {
-		
+		// Workaround.
+		this.onclick((Select) bo, e);
 	}
 	
 	// TODO: Show port on select.
 	public void onclick(Select selectObj, MouseEvent e) {
+		selectObj.setDepth(0);
 		canvas.clearSelectedObjs();
 		canvas.addtoSelected(selectObj);
 		selectObj.select();
 	}
 
 	public void pressed(MouseEvent e) {
+		// You still pressing when you are dragging.
 		this.mousePt = e.getPoint();
 	}
 
@@ -44,7 +47,6 @@ class SelectState implements State {
 			return;
 		int dx = e.getX() - mousePt.x;
 		int dy = e.getY() - mousePt.y;
-		System.out.format("e.x: %d e.y: m.x: %d m.y: %d\n", e.getX(), e.getY(), mousePt.x, mousePt.y);
 		selectObj.movebyOffset(dx, dy);
 		canvas.repaint();
 	}

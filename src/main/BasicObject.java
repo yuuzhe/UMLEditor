@@ -41,7 +41,7 @@ public abstract class BasicObject extends JLabel implements Select {
 	
 	protected void onclick(MouseEvent e) {
 		Canvas canvas = (Canvas) this.getParent();
-		canvas.getState().onclick((Select) this, e);
+		canvas.getState().onclick(this, e);
 	}
 	
 	protected void pressed(MouseEvent e) {
@@ -55,6 +55,10 @@ public abstract class BasicObject extends JLabel implements Select {
 	}
 	
 	// The implementation of Select interface
+	public void setDepth(int depth) {
+		this.getParent().setComponentZOrder(this, 0);
+	}
+	
 	public boolean isSelected() {
 		return this.selected;
 	}
