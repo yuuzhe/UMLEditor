@@ -36,23 +36,26 @@ public abstract class BasicObject extends JLabel implements Select {
 		this.selectedIcon = new ImageIcon(selectedIconPath);
 		this.unselectedIcon = new ImageIcon(unselectedIconPath);
 		
-		super.setSize(64, 64);
 		super.setIcon(this.unselectedIcon);
 	}
 	
 	protected void onclick(MouseEvent e) {
-		Canvas canvas = (Canvas) this.getParent();
+		Canvas canvas = this.getCanvas();
 		canvas.getState().onclick(this, e);
 	}
 	
 	protected void pressed(MouseEvent e) {
-		Canvas canvas = (Canvas) this.getParent();
-		canvas.getState().pressed(e);
+		if (this.selected) {
+			Canvas canvas = this.getCanvas();
+			canvas.getState().pressed(e);
+		}
 	}
 	
 	protected void dragged(MouseEvent e) {
-		Canvas canvas = (Canvas) this.getParent();
-		canvas.getState().dragged((Select) this, e);
+		if (this.selected) {
+			Canvas canvas = this.getCanvas();
+			canvas.getState().dragged((Select) this, e);
+		}
 	}
 	
 	// The implementation of Select interface
@@ -102,6 +105,10 @@ public abstract class BasicObject extends JLabel implements Select {
 	public void hidePort() {
 		setIcon(this.unselectedIcon);
 	}
+	
+	private Canvas getCanvas() {
+		return (Canvas) super.getParent();
+	}
 }
 
 class Port {
@@ -115,11 +122,14 @@ class Port {
 class ClassObject extends BasicObject {
 	public ClassObject() {
 		super("assets\\class.png", "assets\\selected_class.png");
+		super.setSize(64, 64);
 	}
 }
 
 class UCObject extends BasicObject {
 	public UCObject() {
 		super("assets\\uc.png", "assets\\selected_uc.png");
+		// Ugly workaround
+		super.setSize(64, 44);
 	}
 }

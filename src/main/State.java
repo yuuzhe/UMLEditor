@@ -8,7 +8,10 @@ public interface State {
 	public void onclick(BasicObject bo, MouseEvent e);
 	public void onclick(Select selectObj, MouseEvent e);
 	public void pressed(MouseEvent e);
+	public void pressed(Canvas canvas, MouseEvent e);
 	public void dragged(Select bo, MouseEvent e);
+	public void dragged(Canvas canvas, MouseEvent e);
+	public void released(Canvas canvas, MouseEvent e);
 }
 
 class SelectState implements State {
@@ -29,7 +32,6 @@ class SelectState implements State {
 		this.onclick((Select) bo, e);
 	}
 	
-	// TODO: Show port on select.
 	public void onclick(Select selectObj, MouseEvent e) {
 		selectObj.setDepth(0);
 		canvas.clearSelectedObjs();
@@ -37,17 +39,29 @@ class SelectState implements State {
 		selectObj.select();
 	}
 
+	public void pressed(Canvas canvas, MouseEvent e) {
+		canvas.setStartingPoint(e.getPoint());
+	}
+
 	public void pressed(MouseEvent e) {
 		// You still pressing when you are dragging.
 		this.mousePt = e.getPoint();
 	}
 
+	public void dragged(Canvas canvas, MouseEvent e) {
+		canvas.setEndingPoint(e.getPoint());
+		canvas.repaint();
+	}
+
 	public void dragged(Select selectObj, MouseEvent e) {
-		if (!selectObj.isSelected())
-			return;
 		int dx = e.getX() - mousePt.x;
 		int dy = e.getY() - mousePt.y;
 		selectObj.movebyOffset(dx, dy);
+		canvas.repaint();
+	}
+	
+	public void released(Canvas canvas, MouseEvent e) {
+		canvas.resetRect();
 		canvas.repaint();
 	}
 }
@@ -73,7 +87,19 @@ class ALState implements State {
 		
 	}
 
+	public void pressed(Canvas canvas, MouseEvent e) {
+		
+	}
+
 	public void dragged(Select selectObj, MouseEvent e) {
+		
+	}
+
+	public void dragged(Canvas canvas, MouseEvent e) {
+		
+	}
+
+	public void released(Canvas canvas, MouseEvent e) {
 		
 	}
 }
@@ -100,7 +126,19 @@ class CLState implements State {
 		
 	}
 	
+	public void pressed(Canvas canvas, MouseEvent e) {
+		
+	}
+	
 	public void dragged(Select selectObj, MouseEvent e) {
+		
+	}
+
+	public void dragged(Canvas canvas, MouseEvent e) {
+		
+	}
+
+	public void released(Canvas canvas, MouseEvent e) {
 		
 	}
 }
@@ -136,7 +174,19 @@ class ClassState implements State {
 		
 	}
 	
+	public void pressed(Canvas canvas, MouseEvent e) {
+		
+	}
+
 	public void dragged(Select selectObj, MouseEvent e) {
+		
+	}
+	
+	public void dragged(Canvas canvas, MouseEvent e) {
+		
+	}
+
+	public void released(Canvas canvas, MouseEvent e) {
 		
 	}
 }
@@ -163,7 +213,19 @@ class GLState implements State {
 		
 	}
 	
+	public void pressed(Canvas canvas, MouseEvent e) {
+		
+	}
+	
 	public void dragged(Select selectObj, MouseEvent e) {
+		
+	}
+
+	public void dragged(Canvas canvas, MouseEvent e) {
+		
+	}
+
+	public void released(Canvas canvas, MouseEvent e) {
 		
 	}
 }
@@ -199,7 +261,19 @@ class UCState implements State {
 		
 	}
 	
+	public void pressed(Canvas canvas, MouseEvent e) {
+		
+	}
+	
 	public void dragged(Select selectObj, MouseEvent e) {
+		
+	}
+
+	public void dragged(Canvas canvas, MouseEvent e) {
+		
+	}
+
+	public void released(Canvas canvas, MouseEvent e) {
 		
 	}
 }

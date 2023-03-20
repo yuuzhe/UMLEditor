@@ -7,4 +7,9 @@ public interface Select {
 	public void unselect();
 	public void toggleSelect();
 	public void movebyOffset(int dx, int dy);
+	
+	public int getX();
+	public int getY();
+	public int getWidth();
+	public int getHeight();
 }

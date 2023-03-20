@@ -60,19 +60,22 @@ public class UMLEditor {
 		JMenu editMenu = new JMenu("Edit");
 		menuBar.add(editMenu);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Group");
-		editMenu.add(mntmNewMenuItem_1);
+		JMenuItem groupMI = new JMenuItem("Group");
+		groupMI.setEnabled(false);
+		editMenu.add(groupMI);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Ungroup");
-		editMenu.add(mntmNewMenuItem_2);
+		JMenuItem ungroupMI = new JMenuItem("Ungroup");
+		ungroupMI.setEnabled(false);
+		editMenu.add(ungroupMI);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Change Object Name");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		JMenuItem renameMI = new JMenuItem("Change Object Name");
+		renameMI.setEnabled(false);
+		renameMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("hi");
 			}
 		});
-		editMenu.add(mntmNewMenuItem);
+		editMenu.add(renameMI);
 		
 		ButtonsPanel buttonsPanel = new ButtonsPanel();
 		buttonsPanel.setBackground(new Color(255, 128, 128));
