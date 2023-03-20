@@ -169,8 +169,8 @@ public class Canvas extends JPanel {
 			int objEndX = objX + obj.getWidth();
 			int objEndY = objY + obj.getHeight();
 
-			return objX >= minX && objEndX <= maxX && 
-					objY >= minY && objEndY <= maxY;
+			return objX > minX && objEndX < maxX && 
+					objY > minY && objEndY < maxY;
 		}
 	}
 }
