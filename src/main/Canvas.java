@@ -80,6 +80,7 @@ public class Canvas extends JPanel {
 	}
 	
 	public void resetRect() {
+		this.clearSelectedObjs();
 		for (int i = 0; i < this.getComponentCount(); i++) {
 			Select obj = (Select) this.getComponent(i);
 			if (this.selectRect.in(obj)) {
