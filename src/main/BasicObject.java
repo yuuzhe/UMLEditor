@@ -40,27 +40,24 @@ public abstract class BasicObject extends JLabel implements Select {
 	}
 	
 	protected void onclick(MouseEvent e) {
-		Canvas canvas = this.getCanvas();
-		canvas.getState().onclick(this, e);
+		UIComponent.canvas.getState().onclick(this, e);
 	}
 	
 	protected void pressed(MouseEvent e) {
 		if (this.selected) {
-			Canvas canvas = this.getCanvas();
-			canvas.getState().pressed(e);
+			UIComponent.canvas.getState().pressed(e);
 		}
 	}
 	
 	protected void dragged(MouseEvent e) {
 		if (this.selected) {
-			Canvas canvas = this.getCanvas();
-			canvas.getState().dragged((Select) this, e);
+			UIComponent.canvas.getState().dragged((Select) this, e);
 		}
 	}
 	
 	// The implementation of Select interface
 	public void setDepth(int depth) {
-		this.getParent().setComponentZOrder(this, 0);
+		UIComponent.canvas.setComponentZOrder(this, 0);
 	}
 	
 	public boolean isSelected() {
@@ -75,14 +72,6 @@ public abstract class BasicObject extends JLabel implements Select {
 	public void unselect() {
 		this.selected = false;
 		this.hidePort();
-	}
-	
-	public void toggleSelect() {
-		if (isSelected()) {
-			unselect();
-		} else {
-			select();
-		}
 	}
 	
 	public void movebyOffset(int dx, int dy) {
@@ -104,10 +93,6 @@ public abstract class BasicObject extends JLabel implements Select {
 	
 	public void hidePort() {
 		setIcon(this.unselectedIcon);
-	}
-	
-	private Canvas getCanvas() {
-		return (Canvas) super.getParent();
 	}
 }
 

@@ -192,5 +192,10 @@ public class UMLEditor {
 		buttonsPanel.add(useCaseButton);
 		buttonsPanel.addtoButtonGroup(useCaseButton);
 		frame.getContentPane().setLayout(groupLayout);
+
+		UIComponent.setCanvas(canvas);
+		UIComponent.setGroupMI(groupMI);
+		UIComponent.setUngroupMI(ungroupMI);
+		UIComponent.setRenameMI(renameMI);
 	}
 }

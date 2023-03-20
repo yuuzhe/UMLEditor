@@ -37,12 +37,14 @@ class SelectState implements State {
 		canvas.clearSelectedObjs();
 		canvas.addtoSelected(selectObj);
 		selectObj.select();
+		canvas.setMenu();
 	}
 
 	public void pressed(Canvas canvas, MouseEvent e) {
 		canvas.setStartingPoint(e.getPoint());
 	}
 
+	// Basic object pressed.
 	public void pressed(MouseEvent e) {
 		// You still pressing when you are dragging.
 		this.mousePt = e.getPoint();
@@ -63,6 +65,7 @@ class SelectState implements State {
 	public void released(Canvas canvas, MouseEvent e) {
 		canvas.resetRect();
 		canvas.repaint();
+		canvas.setMenu();
 	}
 }
 
@@ -153,8 +156,8 @@ class ClassState implements State {
 	}
 	
 	public void onclick(BasicObject bo, MouseEvent e) {
-		Canvas canvas = (Canvas) bo.getParent();
-		createClassObject(canvas, bo.getX() + e.getX(), bo.getY() + e.getY());
+		createClassObject(UIComponent.canvas, 
+				bo.getX() + e.getX(), bo.getY() + e.getY());
 	}
 	
 	
@@ -240,9 +243,8 @@ class UCState implements State {
 	}
 	
 	public void onclick(BasicObject bo, MouseEvent e) {
-		Canvas canvas = (Canvas) bo.getParent();
 		// The (x,y) is based on the BasicObject which listened the event.
-		createUCObject(canvas, bo.getX() + e.getX(), bo.getY() + e.getY());
+		createUCObject(UIComponent.canvas, bo.getX() + e.getX(), bo.getY() + e.getY());
 	}
 	
 	

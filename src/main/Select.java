@@ -5,7 +5,6 @@ public interface Select {
 	public void setDepth(int depth);
 	public void select();
 	public void unselect();
-	public void toggleSelect();
 	public void movebyOffset(int dx, int dy);
 	
 	public int getX();

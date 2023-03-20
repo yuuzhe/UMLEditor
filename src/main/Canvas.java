@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 public class Canvas extends JPanel {
@@ -50,6 +51,7 @@ public class Canvas extends JPanel {
 	public void setState(State s) {
 		// Reset selected before changing state.
 		this.clearSelectedObjs();
+		this.unsetMenu();
 		this.state = s;
 	}
 	
@@ -86,6 +88,19 @@ public class Canvas extends JPanel {
 			}
 		}
 		this.selectRect.reset();
+	}
+	
+	public void setMenu() {
+		int n = this.selectedObjs.size();
+
+		if (n == 1) {
+		} else if (n > 1) {
+			
+		}
+	}
+	
+	public void unsetMenu() {
+		
 	}
 	
 	private void onclick(MouseEvent e) {
@@ -130,7 +145,7 @@ public class Canvas extends JPanel {
 			int py = Math.min(y0,y1);
 			int pw = Math.abs(x0-x1);
 			int ph = Math.abs(y0-y1);
-			g.setColor(new Color(60, 255, 255, 150));
+			g.setColor(new Color(60, 255, 255, 200));
 			g.fillRect(px, py, pw, ph);
 			g.drawRect(px, py, pw, ph);
 		}
