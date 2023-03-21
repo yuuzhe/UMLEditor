@@ -10,6 +10,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -60,28 +61,45 @@ public class UMLEditor {
 		JMenu editMenu = new JMenu("Edit");
 		menuBar.add(editMenu);
 		
+		Canvas canvas = new Canvas();
+
 		JMenuItem groupMI = new JMenuItem("Group");
-		groupMI.setEnabled(false);
+		 groupMI.setEnabled(false);
 		editMenu.add(groupMI);
+		groupMI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CompositeObject co = new CompositeObject(canvas.getSelected());
+				canvas.add(co, 0);
+				canvas.repaint();
+				groupMI.setEnabled(false);
+			}
+		});
 		
 		JMenuItem ungroupMI = new JMenuItem("Ungroup");
 		ungroupMI.setEnabled(false);
 		editMenu.add(ungroupMI);
+		ungroupMI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CompositeObject co = (CompositeObject) canvas.getSelected().get(0);
+				co.ungroup();
+				groupMI.setEnabled(false);
+			}
+		});
 		
 		JMenuItem renameMI = new JMenuItem("Change Object Name");
 		renameMI.setEnabled(false);
 		renameMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("hi");
+				String name = JOptionPane.showInputDialog(renameMI, "Change Object Name:", null);
+				System.out.printf("%s", name);
+				BasicObject bo = (BasicObject) canvas.getSelected().get(0);
+				bo.setText(name);
 			}
 		});
 		editMenu.add(renameMI);
 		
 		ButtonsPanel buttonsPanel = new ButtonsPanel();
 		buttonsPanel.setBackground(new Color(255, 128, 128));
-
-		
-		Canvas canvas = new Canvas();
 		
 		canvas.setBackground(new Color(255, 255, 255));
 		

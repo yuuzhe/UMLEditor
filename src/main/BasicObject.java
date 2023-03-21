@@ -12,12 +12,14 @@ public abstract class BasicObject extends JLabel implements Select {
 	private ImageIcon unselectedIcon = new ImageIcon();
 	protected Port[] ports = new Port[4];
 	protected boolean selected = false;
+	protected boolean grouped = false;
 	
 	public BasicObject(String unselectedIconPath, String selectedIconPath) {
 		super.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				onclick(e);
+				UIComponent.renameMI.setEnabled(true);
 			}
 			
 			@Override
@@ -26,7 +28,7 @@ public abstract class BasicObject extends JLabel implements Select {
 			}
 		});
 		
-		this.addMouseMotionListener(new MouseAdapter( ) {
+		super.addMouseMotionListener(new MouseAdapter( ) {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				dragged(e);
@@ -39,20 +41,12 @@ public abstract class BasicObject extends JLabel implements Select {
 		super.setIcon(this.unselectedIcon);
 	}
 	
-	protected void onclick(MouseEvent e) {
-		UIComponent.canvas.getState().onclick(this, e);
+	public boolean isGrouped() {
+		return this.grouped;
 	}
 	
-	protected void pressed(MouseEvent e) {
-		if (this.selected) {
-			UIComponent.canvas.getState().pressed(e);
-		}
-	}
-	
-	protected void dragged(MouseEvent e) {
-		if (this.selected) {
-			UIComponent.canvas.getState().dragged((Select) this, e);
-		}
+	public void setGrouped(boolean grouped) {
+		this.grouped = grouped;
 	}
 	
 	// The implementation of Select interface
@@ -94,6 +88,23 @@ public abstract class BasicObject extends JLabel implements Select {
 	public void hidePort() {
 		setIcon(this.unselectedIcon);
 	}
+	
+	public void ungroup() {}
+
+	protected void onclick(MouseEvent e) {
+		UIComponent.canvas.getState().onclick(this, e);
+	}
+	
+	protected void pressed(MouseEvent e) {
+		if (this.selected)
+			UIComponent.canvas.getState().pressed(e);
+	}
+	
+	protected void dragged(MouseEvent e) {
+		if (this.selected)
+			UIComponent.canvas.getState().dragged((Select) this, e);
+	}
+	
 }
 
 class Port {

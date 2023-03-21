@@ -7,14 +7,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 public class Canvas extends JPanel {
 	private SelectRect selectRect = new SelectRect(0, 0, 0, 0);
 
 	private State state;
-	private ArrayList<Select> selectedObjs = new ArrayList();
+	private ArrayList<Select> selectedObjs = new ArrayList<Select>();
 	
 	public Canvas() {
 		this.state = new SelectState(this);
@@ -51,8 +50,11 @@ public class Canvas extends JPanel {
 	public void setState(State s) {
 		// Reset selected before changing state.
 		this.clearSelectedObjs();
-		this.unsetMenu();
 		this.state = s;
+	}
+	
+	public ArrayList<Select> getSelected() {
+		return this.selectedObjs;
 	}
 	
 	public void addtoSelected(Select s) {
@@ -63,6 +65,9 @@ public class Canvas extends JPanel {
 		for (Select obj : this.selectedObjs)
 			obj.unselect();
 		this.selectedObjs.clear();
+		UIComponent.groupMI.setEnabled(false);
+		UIComponent.ungroupMI.setEnabled(false);
+		UIComponent.renameMI.setEnabled(false);
 	}
 	
 	@Override
@@ -81,27 +86,20 @@ public class Canvas extends JPanel {
 	
 	public void resetRect() {
 		this.clearSelectedObjs();
+		int selectedCount = 0;
+
 		for (int i = 0; i < this.getComponentCount(); i++) {
 			Select obj = (Select) this.getComponent(i);
-			if (this.selectRect.in(obj)) {
+			if (!obj.isGrouped() && this.selectRect.in(obj)) {
+				selectedCount++;
 				obj.select();
 				this.addtoSelected(obj);
 			}
 		}
-		this.selectRect.reset();
-	}
-	
-	public void setMenu() {
-		int n = this.selectedObjs.size();
 
-		if (n == 1) {
-		} else if (n > 1) {
-			
-		}
-	}
-	
-	public void unsetMenu() {
-		
+		if (selectedCount > 1)
+			UIComponent.groupMI.setEnabled(true);
+		this.selectRect.reset();
 	}
 	
 	private void onclick(MouseEvent e) {

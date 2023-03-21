@@ -37,7 +37,6 @@ class SelectState implements State {
 		canvas.clearSelectedObjs();
 		canvas.addtoSelected(selectObj);
 		selectObj.select();
-		canvas.setMenu();
 	}
 
 	public void pressed(Canvas canvas, MouseEvent e) {
@@ -65,7 +64,6 @@ class SelectState implements State {
 	public void released(Canvas canvas, MouseEvent e) {
 		canvas.resetRect();
 		canvas.repaint();
-		canvas.setMenu();
 	}
 }
 
@@ -162,7 +160,8 @@ class ClassState implements State {
 	
 	
 	public void onclick(Select selectObj, MouseEvent e) {
-		
+		createClassObject(UIComponent.canvas, 
+				selectObj.getX() + e.getX(), selectObj.getY() + e.getY());
 	}
 
 	private void createClassObject(Canvas canvas, int x, int y) {
@@ -244,12 +243,14 @@ class UCState implements State {
 	
 	public void onclick(BasicObject bo, MouseEvent e) {
 		// The (x,y) is based on the BasicObject which listened the event.
-		createUCObject(UIComponent.canvas, bo.getX() + e.getX(), bo.getY() + e.getY());
+		createUCObject(UIComponent.canvas, 
+				bo.getX() + e.getX(), bo.getY() + e.getY());
 	}
 	
 	
 	public void onclick(Select selectObj, MouseEvent e) {
-		
+		createUCObject(UIComponent.canvas, 
+				selectObj.getX() + e.getX(), selectObj.getY() + e.getY());
 	}
 
 	private void createUCObject(Canvas canvas, int x, int y) {
@@ -268,7 +269,7 @@ class UCState implements State {
 	}
 	
 	public void dragged(Select selectObj, MouseEvent e) {
-		
+
 	}
 
 	public void dragged(Canvas canvas, MouseEvent e) {

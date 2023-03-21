@@ -18,7 +18,7 @@ public class UIComponent {
 	}
 
 	public static void setUngroupMI(JMenuItem ugMI) {
-		groupMI = ugMI;
+		ungroupMI = ugMI;
 	}
 	
 	public static void setRenameMI(JMenuItem rMI) {
