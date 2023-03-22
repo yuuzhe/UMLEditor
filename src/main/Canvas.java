@@ -144,7 +144,7 @@ public class Canvas extends JPanel {
 			int py = Math.min(y0,y1);
 			int pw = Math.abs(x0-x1);
 			int ph = Math.abs(y0-y1);
-			g.setColor(new Color(60, 255, 255, 200));
+			g.setColor(new Color(62, 193, 115, 128));
 			g.fillRect(px, py, pw, ph);
 			g.drawRect(px, py, pw, ph);
 		}

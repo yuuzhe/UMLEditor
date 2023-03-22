@@ -13,7 +13,8 @@ public class CompositeObject extends JPanel implements Select {
 	private boolean grouped = false;
 	private ArrayList<Select> members = new ArrayList<Select>();
 
-	private int x0, y0 = -1;
+	private int x0= UIComponent.canvas.getWidth();
+	private int y0 = UIComponent.canvas.getHeight();
 	private int x1, y1 = -1;
 	
 	public CompositeObject(ArrayList<Select> selected) {
@@ -37,25 +38,17 @@ public class CompositeObject extends JPanel implements Select {
 			}
 		});
 
-		Select first = selected.get(0);
-		first.setGrouped(true);
-		this.x0 = first.getX() - 1;
-		this.y0 = first.getY() - 1;
-		this.x1 = first.getX() + first.getWidth() + 1;
-		this.y1 = first.getY() + first.getHeight() + 1;
-		this.members.add(first);
-
-		selected.stream().skip(1).forEach((obj) -> {
+		for (Select obj : selected) {
 			obj.setGrouped(true);
 			this.x0 = Math.min(x0, obj.getX() - 1);
 			this.y0 = Math.min(y0, obj.getY() - 1);
 			this.x1 = Math.max(x1, obj.getX() + obj.getWidth() + 1);
 			this.y1 = Math.max(y1, obj.getY() + obj.getHeight() + 1);
 			this.members.add(obj);
-		});
+		}
 		
 		UIComponent.canvas.clearSelectedObjs();
-		// super.setBackground(new Color(62, 193, 115, 128));
+		super.setBackground(new Color(193, 62, 140, 128));
 		super.setLocation(x0, y0);
 		super.setSize(x1 - x0, y1 - y0);
 	}
@@ -84,12 +77,10 @@ public class CompositeObject extends JPanel implements Select {
 	}
 
 	public void select() {
-		this.setBorder(true);
 		this.selected = true;
 	}
 
 	public void unselect() {
-		this.setBorder(false);
 		this.selected = false;
 	}
 
@@ -99,11 +90,6 @@ public class CompositeObject extends JPanel implements Select {
 		int x = this.getX();
 		int y = this.getY();
 		this.setLocation(x + dx, y + dy);
-	}
-	
-	private void setBorder(boolean set) {
-		int borderWidth = set ? 1 : 0;
-		super.setBorder(BorderFactory.createLineBorder(Color.red, borderWidth));
 	}
 	
 	private void onclick(MouseEvent e) {
