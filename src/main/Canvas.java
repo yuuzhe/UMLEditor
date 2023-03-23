@@ -12,6 +12,10 @@ import javax.swing.JPanel;
 public class Canvas extends JPanel {
 	private SelectRect selectRect = new SelectRect(0, 0, 0, 0);
 
+	private ArrayList<ConnectionLine> cls = new ArrayList<ConnectionLine>();
+	private ConnectionLine vline = new AL();
+
+
 	private State state;
 	private ArrayList<Select> selectedObjs = new ArrayList<Select>();
 	
@@ -72,6 +76,8 @@ public class Canvas extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		this.selectRect.drawSelectRect(g);
+		this.paintVL(g);
+		this.paintCLs(g);
 	}
 	
 	public void setStartingPoint(Point point) {
@@ -91,9 +97,6 @@ public class Canvas extends JPanel {
 			}
 		}
 		
-		for (Select s : this.selectedObjs)
-			System.out.println(s);
-
 		int selectedCount = this.selectedObjs.size();
 		if (selectedCount == 1)
 			((Select) this.selectedObjs.get(0)).setMI();
@@ -116,6 +119,20 @@ public class Canvas extends JPanel {
 	
 	private void released(MouseEvent e) {
 		this.state.released(this, e);
+	}
+	
+	private void paintCLs(Graphics g) {
+		for (ConnectionLine cl : this.cls) {
+			
+		}
+	}
+	
+	public ConnectionLine getVL() {
+		return this.vline;
+	}
+	
+	private void paintVL(Graphics g) {
+		g.drawLine(vline.x0, vline.y0, vline.x1, vline.y1);
 	}
 
 	private class SelectRect {

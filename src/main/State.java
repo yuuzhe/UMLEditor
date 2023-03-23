@@ -6,10 +6,12 @@ import java.awt.event.MouseEvent;
 public interface State {
 	public void onclick(Canvas canvas, MouseEvent e);
 	public void onclick(BasicObject bo, MouseEvent e);
-	public void onclick(Select selectObj, MouseEvent e);
-	public void pressed(MouseEvent e);
+	public void onclick(Select so, MouseEvent e);
+	public void pressed(Select so, MouseEvent e);
+	public void pressed(BasicObject bo, MouseEvent e);
 	public void pressed(Canvas canvas, MouseEvent e);
-	public void dragged(Select bo, MouseEvent e);
+	public void dragged(BasicObject bo, MouseEvent e);
+	public void dragged(Select so, MouseEvent e);
 	public void dragged(Canvas canvas, MouseEvent e);
 	public void released(Canvas canvas, MouseEvent e);
 }
@@ -27,22 +29,32 @@ class SelectState implements State {
 		canvas.clearSelectedObjs();
 	}
 	
-	public void onclick(BasicObject bo, MouseEvent e) {}
+	public void onclick(BasicObject bo, MouseEvent e) {
+		
+	}
 	
-	public void onclick(Select selectObj, MouseEvent e) {
-		selectObj.setDepth(0);
+	public void onclick(Select so, MouseEvent e) {
+		so.setDepth(0);
 		canvas.clearSelectedObjs();
-		canvas.addtoSelected(selectObj);
-		selectObj.select();
+		canvas.addtoSelected(so);
+		so.select();
+		so.setMI();
 	}
 
 	public void pressed(Canvas canvas, MouseEvent e) {
 		canvas.setStartingPoint(e.getPoint());
 	}
 
-	// Basic object pressed.
-	public void pressed(MouseEvent e) {
-		this.mousePt = e.getPoint();
+	public void pressed(BasicObject bo, MouseEvent e) {
+	}
+	
+	public void pressed(Select so, MouseEvent e) {
+		if (so.isSelected())
+			this.mousePt = e.getPoint();
+	}
+	
+	public void dragged(BasicObject bo, MouseEvent e) {
+		
 	}
 
 	public void dragged(Canvas canvas, MouseEvent e) {
@@ -50,11 +62,13 @@ class SelectState implements State {
 		canvas.repaint();
 	}
 
-	public void dragged(Select selectObj, MouseEvent e) {
-		int dx = e.getX() - mousePt.x;
-		int dy = e.getY() - mousePt.y;
-		selectObj.movebyOffset(dx, dy);
-		canvas.repaint();
+	public void dragged(Select so, MouseEvent e) {
+		if (so.isSelected()) {
+			int dx = e.getX() - mousePt.x;
+			int dy = e.getY() - mousePt.y;
+			so.movebyOffset(dx, dy);
+			canvas.repaint();
+		}
 	}
 	
 	public void released(Canvas canvas, MouseEvent e) {
@@ -74,31 +88,55 @@ class ALState implements State {
 	}
 	
 	public void onclick(BasicObject bo, MouseEvent e) {
+
+	}
+	
+	public void onclick(Select so, MouseEvent e) {
 		
 	}
 	
-	public void onclick(Select selectObj, MouseEvent e) {
-		
+	public void pressed(Select so, MouseEvent e) {
+		// Ugly dispatch?
+		try {
+			pressed((BasicObject) so, e);
+		} catch(Exception exception) {}
 	}
 
-	public void pressed(MouseEvent e) {
-		
+	public void pressed(BasicObject bo, MouseEvent e) {
+		Canvas canvas = UIComponent.canvas;
+		ConnectionLine vl = canvas.getVL();
+		int x = bo.getX() + e.getX();
+		int y = bo.getY() + e.getY();
+
+		vl.setStartingPoint(x, y);
+		canvas.repaint();
 	}
 
 	public void pressed(Canvas canvas, MouseEvent e) {
-		
+
 	}
 
-	public void dragged(Select selectObj, MouseEvent e) {
-		
+	public void dragged(BasicObject bo, MouseEvent e) {
+		Canvas canvas = UIComponent.canvas;
+		ConnectionLine vl = canvas.getVL();
+		int x = bo.getX() + e.getX();
+		int y = bo.getY() + e.getY();
+
+		vl.setEndingPoint(x, y);
+		canvas.repaint();
+	}
+
+	public void dragged(Select so, MouseEvent e) {
+		try {
+			dragged((BasicObject) so, e);
+		} catch(Exception exception) {}
 	}
 
 	public void dragged(Canvas canvas, MouseEvent e) {
-		
 	}
 
 	public void released(Canvas canvas, MouseEvent e) {
-		
+
 	}
 }
 
@@ -116,11 +154,15 @@ class CLState implements State {
 	}
 	
 	
-	public void onclick(Select selectObj, MouseEvent e) {
+	public void onclick(Select so, MouseEvent e) {
+		
+	}
+	
+	public void pressed(Select so, MouseEvent e) {
 		
 	}
 
-	public void pressed(MouseEvent e) {
+	public void pressed(BasicObject bo, MouseEvent e) {
 		
 	}
 	
@@ -128,7 +170,12 @@ class CLState implements State {
 		
 	}
 	
-	public void dragged(Select selectObj, MouseEvent e) {
+
+	public void dragged(BasicObject bo, MouseEvent e) {
+		
+	}
+
+	public void dragged(Select so, MouseEvent e) {
 		
 	}
 
@@ -156,9 +203,9 @@ class ClassState implements State {
 	}
 	
 	
-	public void onclick(Select selectObj, MouseEvent e) {
+	public void onclick(Select so, MouseEvent e) {
 		createClassObject(UIComponent.canvas, 
-				selectObj.getX() + e.getX(), selectObj.getY() + e.getY());
+				so.getX() + e.getX(), so.getY() + e.getY());
 	}
 
 	private void createClassObject(Canvas canvas, int x, int y) {
@@ -169,7 +216,11 @@ class ClassState implements State {
 		canvas.repaint();
 	}
 	
-	public void pressed(MouseEvent e) {
+	public void pressed(Select so, MouseEvent e) {
+		
+	}
+	
+	public void pressed(BasicObject bo, MouseEvent e) {
 		
 	}
 	
@@ -177,7 +228,11 @@ class ClassState implements State {
 		
 	}
 
-	public void dragged(Select selectObj, MouseEvent e) {
+	public void dragged(BasicObject bo, MouseEvent e) {
+		
+	}
+
+	public void dragged(Select so, MouseEvent e) {
 		
 	}
 	
@@ -204,11 +259,15 @@ class GLState implements State {
 	}
 	
 	
-	public void onclick(Select selectObj, MouseEvent e) {
+	public void onclick(Select so, MouseEvent e) {
+		
+	}
+	
+	public void pressed(Select so, MouseEvent e) {
 		
 	}
 
-	public void pressed(MouseEvent e) {
+	public void pressed(BasicObject bo, MouseEvent e) {
 		
 	}
 	
@@ -216,7 +275,11 @@ class GLState implements State {
 		
 	}
 	
-	public void dragged(Select selectObj, MouseEvent e) {
+	public void dragged(BasicObject bo, MouseEvent e) {
+		
+	}
+
+	public void dragged(Select so, MouseEvent e) {
 		
 	}
 
@@ -245,9 +308,8 @@ class UCState implements State {
 	}
 	
 	
-	public void onclick(Select selectObj, MouseEvent e) {
-		createUCObject(UIComponent.canvas, 
-				selectObj.getX() + e.getX(), selectObj.getY() + e.getY());
+	public void onclick(Select so, MouseEvent e) {
+		createUCObject(UIComponent.canvas, so.getX() + e.getX(), so.getY() + e.getY());
 	}
 
 	private void createUCObject(Canvas canvas, int x, int y) {
@@ -257,7 +319,11 @@ class UCState implements State {
 		canvas.repaint();
 	}
 	
-	public void pressed(MouseEvent e) {
+	public void pressed(Select so, MouseEvent e) {
+		
+	}
+	
+	public void pressed(BasicObject bo, MouseEvent e) {
 		
 	}
 	
@@ -265,7 +331,11 @@ class UCState implements State {
 		
 	}
 	
-	public void dragged(Select selectObj, MouseEvent e) {
+	public void dragged(BasicObject bo, MouseEvent e) {
+
+	}
+
+	public void dragged(Select so, MouseEvent e) {
 
 	}
 

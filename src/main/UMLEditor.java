@@ -149,7 +149,7 @@ public class UMLEditor {
 		associationLineButton.setSize(64, 64);
 		associationLineButton.setToolTipText("Association Line");
 		associationLineButton.setIcon(new ImageIcon("assets\\association.png"));
-		selectButton.addActionListener(new ActionListener() {
+		associationLineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				canvas.setState(new ALState());
 			}

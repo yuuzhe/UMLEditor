@@ -19,7 +19,6 @@ public abstract class BasicObject extends JLabel implements Select {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				onclick(e);
-				UIComponent.renameMI.setEnabled(true);
 			}
 			
 			@Override
@@ -98,15 +97,16 @@ public abstract class BasicObject extends JLabel implements Select {
 	}
 	
 	protected void pressed(MouseEvent e) {
-		if (this.selected)
-			UIComponent.canvas.getState().pressed(e);
+		UIComponent.canvas.getState().pressed((Select) this, e);
 	}
 	
 	protected void dragged(MouseEvent e) {
-		if (this.selected)
-			UIComponent.canvas.getState().dragged((Select) this, e);
+		UIComponent.canvas.getState().dragged((Select) this, e);
 	}
 	
+	protected void entered(MouseEvent e) {
+		
+	}
 }
 
 class Port {
