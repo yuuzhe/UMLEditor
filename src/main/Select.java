@@ -9,6 +9,8 @@ public interface Select {
 	public void unselect();
 	public void movebyOffset(int dx, int dy);
 	public void setGrouped(boolean grouped);
+	// Set MenuItem when only one object is selected.
+	public void setMI();
 	
 	public int getX();
 	public int getY();

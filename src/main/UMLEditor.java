@@ -91,7 +91,6 @@ public class UMLEditor {
 		renameMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String name = JOptionPane.showInputDialog(renameMI, "Change Object Name:", null);
-				System.out.printf("%s", name);
 				BasicObject bo = (BasicObject) canvas.getSelected().get(0);
 				bo.setText(name);
 			}

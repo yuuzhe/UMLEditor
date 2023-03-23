@@ -54,6 +54,10 @@ public abstract class BasicObject extends JLabel implements Select {
 		UIComponent.canvas.setComponentZOrder(this, 0);
 	}
 	
+	public void setMI() {
+		UIComponent.renameMI.setEnabled(true);
+	}
+	
 	public boolean isSelected() {
 		return this.selected;
 	}
@@ -89,10 +93,8 @@ public abstract class BasicObject extends JLabel implements Select {
 		setIcon(this.unselectedIcon);
 	}
 	
-	public void ungroup() {}
-
 	protected void onclick(MouseEvent e) {
-		UIComponent.canvas.getState().onclick(this, e);
+		UIComponent.canvas.getState().onclick((Select) this, e);
 	}
 	
 	protected void pressed(MouseEvent e) {

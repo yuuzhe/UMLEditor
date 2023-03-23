@@ -65,9 +65,7 @@ public class Canvas extends JPanel {
 		for (Select obj : this.selectedObjs)
 			obj.unselect();
 		this.selectedObjs.clear();
-		UIComponent.groupMI.setEnabled(false);
-		UIComponent.ungroupMI.setEnabled(false);
-		UIComponent.renameMI.setEnabled(false);
+		UIComponent.resetAllMI();
 	}
 	
 	@Override
@@ -85,19 +83,21 @@ public class Canvas extends JPanel {
 	}
 	
 	public void resetRect() {
-		this.clearSelectedObjs();
-		int selectedCount = 0;
-
 		for (int i = 0; i < this.getComponentCount(); i++) {
 			Select obj = (Select) this.getComponent(i);
 			if (!obj.isGrouped() && this.selectRect.in(obj)) {
-				selectedCount++;
 				obj.select();
 				this.addtoSelected(obj);
 			}
 		}
+		
+		for (Select s : this.selectedObjs)
+			System.out.println(s);
 
-		if (selectedCount > 1)
+		int selectedCount = this.selectedObjs.size();
+		if (selectedCount == 1)
+			((Select) this.selectedObjs.get(0)).setMI();
+		else if (selectedCount > 1)
 			UIComponent.groupMI.setEnabled(true);
 		this.selectRect.reset();
 	}

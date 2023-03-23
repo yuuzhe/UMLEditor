@@ -24,4 +24,10 @@ public class UIComponent {
 	public static void setRenameMI(JMenuItem rMI) {
 		renameMI = rMI;
 	}
+	
+	public static void resetAllMI() {
+		groupMI.setEnabled(false);
+		ungroupMI.setEnabled(false);
+		renameMI.setEnabled(false);
+	}
 }

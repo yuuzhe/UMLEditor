@@ -5,7 +5,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class CompositeObject extends JPanel implements Select {
@@ -13,7 +12,7 @@ public class CompositeObject extends JPanel implements Select {
 	private boolean grouped = false;
 	private ArrayList<Select> members = new ArrayList<Select>();
 
-	private int x0= UIComponent.canvas.getWidth();
+	private int x0 = UIComponent.canvas.getWidth();
 	private int y0 = UIComponent.canvas.getHeight();
 	private int x1, y1 = -1;
 	
@@ -51,6 +50,7 @@ public class CompositeObject extends JPanel implements Select {
 		super.setBackground(new Color(193, 62, 140, 128));
 		super.setLocation(x0, y0);
 		super.setSize(x1 - x0, y1 - y0);
+		super.repaint();
 	}
 	
 	public boolean isGrouped() {
@@ -75,13 +75,21 @@ public class CompositeObject extends JPanel implements Select {
 	public void setDepth(int depth) {
 		UIComponent.canvas.setComponentZOrder(this, 0);
 	}
+	
+	public void setMI() {
+		UIComponent.ungroupMI.setEnabled(true);
+	}
 
 	public void select() {
 		this.selected = true;
+		super.setBackground(new Color(62, 193, 140, 128));
+		UIComponent.canvas.repaint();
 	}
 
 	public void unselect() {
 		this.selected = false;
+		super.setBackground(new Color(193, 62, 140, 128));
+		UIComponent.canvas.repaint();
 	}
 
 	public void movebyOffset(int dx, int dy) {

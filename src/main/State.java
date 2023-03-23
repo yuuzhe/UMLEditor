@@ -27,10 +27,7 @@ class SelectState implements State {
 		canvas.clearSelectedObjs();
 	}
 	
-	public void onclick(BasicObject bo, MouseEvent e) {
-		// Workaround.
-		this.onclick((Select) bo, e);
-	}
+	public void onclick(BasicObject bo, MouseEvent e) {}
 	
 	public void onclick(Select selectObj, MouseEvent e) {
 		selectObj.setDepth(0);
@@ -45,7 +42,6 @@ class SelectState implements State {
 
 	// Basic object pressed.
 	public void pressed(MouseEvent e) {
-		// You still pressing when you are dragging.
 		this.mousePt = e.getPoint();
 	}
 
@@ -62,6 +58,7 @@ class SelectState implements State {
 	}
 	
 	public void released(Canvas canvas, MouseEvent e) {
+		canvas.clearSelectedObjs();
 		canvas.resetRect();
 		canvas.repaint();
 	}
