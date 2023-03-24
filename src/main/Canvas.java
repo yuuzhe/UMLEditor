@@ -13,8 +13,7 @@ public class Canvas extends JPanel {
 	private SelectRect selectRect = new SelectRect(0, 0, 0, 0);
 
 	private ArrayList<ConnectionLine> cls = new ArrayList<ConnectionLine>();
-	private ConnectionLine vline = new AL();
-
+	private ConnectionLine vline = null;
 
 	private State state;
 	private ArrayList<Select> selectedObjs = new ArrayList<Select>();
@@ -76,8 +75,12 @@ public class Canvas extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		this.selectRect.drawSelectRect(g);
-		this.paintVL(g);
-		this.paintCLs(g);
+		
+		if (this.vline != null)
+			this.vline.draw(g);
+
+		for (ConnectionLine cl : this.cls)
+			cl.draw(g);
 	}
 	
 	public void setStartingPoint(Point point) {
@@ -105,36 +108,18 @@ public class Canvas extends JPanel {
 		this.selectRect.reset();
 	}
 	
-	private void onclick(MouseEvent e) {
-		this.state.onclick(this, e);
-	}
-	
-	private void pressed(MouseEvent e) {
-		this.state.pressed(this, e);
-	}
-
-	private void dragged(MouseEvent e) {
-		this.state.dragged(this, e);
-	}
-	
-	private void released(MouseEvent e) {
-		this.state.released(this, e);
-	}
-	
-	private void paintCLs(Graphics g) {
-		for (ConnectionLine cl : this.cls) {
-			
-		}
-	}
-	
 	public ConnectionLine getVL() {
 		return this.vline;
 	}
 	
-	private void paintVL(Graphics g) {
-		g.drawLine(vline.x0, vline.y0, vline.x1, vline.y1);
+	public void setVL(ConnectionLine newVL) {
+		this.vline = newVL;
 	}
-
+	
+	public void addCL(ConnectionLine cl) {
+		this.cls.add(cl);
+	}
+	
 	private class SelectRect {
 		private int x0, y0;
 		private int x1, y1;
@@ -187,5 +172,21 @@ public class Canvas extends JPanel {
 			return objX > minX && objEndX < maxX && 
 					objY > minY && objEndY < maxY;
 		}
+	}
+
+	private void onclick(MouseEvent e) {
+		this.state.onclick(this, e);
+	}
+	
+	private void pressed(MouseEvent e) {
+		this.state.pressed(this, e);
+	}
+
+	private void dragged(MouseEvent e) {
+		this.state.dragged(this, e);
+	}
+	
+	private void released(MouseEvent e) {
+		this.state.released(this, e);
 	}
 }

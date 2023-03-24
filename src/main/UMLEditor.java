@@ -139,6 +139,7 @@ public class UMLEditor {
 		selectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				canvas.setState(new SelectState(canvas));
+				canvas.setVL(null);
 			}
 		});
 		buttonsPanel.add(selectButton);
@@ -151,7 +152,8 @@ public class UMLEditor {
 		associationLineButton.setIcon(new ImageIcon("assets\\association.png"));
 		associationLineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				canvas.setState(new ALState());
+				canvas.setState(new DrawLineState());
+				canvas.setVL(new AL());
 			}
 		});
 		buttonsPanel.add(associationLineButton);
@@ -164,7 +166,8 @@ public class UMLEditor {
 		generalizationLineButton.setIcon(new ImageIcon("assets\\generalization.png"));
 		generalizationLineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				canvas.setState(new GLState());
+				canvas.setState(new DrawLineState());
+				canvas.setVL(new GL());
 			}
 		});
 		buttonsPanel.add(generalizationLineButton);
@@ -177,7 +180,8 @@ public class UMLEditor {
 		compositionLineButton.setToolTipText("Composition Line");
 		compositionLineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				canvas.setState(new CLState());
+				canvas.setState(new DrawLineState());
+				canvas.setVL(new CL());
 			}
 		});
 		buttonsPanel.add(compositionLineButton);
@@ -191,6 +195,7 @@ public class UMLEditor {
 		classButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				canvas.setState(new ClassState());
+				canvas.setVL(null);
 			}
 		});
 		buttonsPanel.add(classButton);
@@ -204,6 +209,7 @@ public class UMLEditor {
 		useCaseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				canvas.setState(new UCState());
+				canvas.setVL(null);
 			}
 		});
 		buttonsPanel.add(useCaseButton);
